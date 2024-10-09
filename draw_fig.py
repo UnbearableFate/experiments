@@ -1,39 +1,52 @@
-import matplotlib.pyplot as plt
-import pandas as pd
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
+from pathlib import Path
 
-# CSVファイルが保存されているディレクトリのパス
-
-directory_path = "./time_result"
+# 目录路径和统计项的定义
+directory_path = "data/1009_adam_experiment01"
 title = 'ResNet18 CIFAR10'
 
-statistic = "time"
+# 需要统计的内容（可以包含多个）
+statistics = ["accuracy", "time"]  # 添加更多需要统计的项
 
 # スムージングのスパン（適宜調整）
 smoothing_span = 8
 
-# 各CSVファイルを順に処理
-for filename in os.listdir(directory_path):
-    if filename.endswith(".csv"):
-        csv_file = filename
-    else:
-        continue
-    file_path = os.path.join(directory_path, csv_file)
-    data = pd.read_csv(file_path)
+# 使用 pathlib 遍历所有子目录中的 CSV 文件
+csv_files = list(Path(directory_path).rglob("*.csv"))
 
-    # 指数移動平均でデータをスムージング
-    data['smoothed_value'] = data[statistic].ewm(span=smoothing_span).mean()
+# 为每个 statistic 单独创建图表并保存
+for statistic in statistics:
+    plt.figure(figsize=(10, 6))  # 创建新的图表
 
-    # スムーズな曲線を描画
-    plt.plot(data['step'], data['smoothed_value'], label=os.path.splitext(csv_file)[0])
+    # 遍历所有找到的 CSV 文件
+    subfix = ""
+    for file_path in csv_files:
+        # 读取 CSV 文件
+        data = pd.read_csv(file_path)
 
-# グラフのタイトルと軸ラベルを設定
-plt.xlabel('epoch')
-plt.ylabel(statistic)
+        # 检查是否包含要统计的列
+        if statistic not in data.columns:
+            print(f"Warning: '{statistic}' not found in {file_path}. Skipping this file.")
+            continue
 
-# 凡例を表示
-plt.legend()
+        # 指数移動平均でデータをスムージング
+        data['smoothed_value'] = data[statistic].ewm(span=smoothing_span).mean()
 
-plt.savefig(directory_path+f"/resnet18_cifar10.pdf", format='pdf')
-# グラフを表示
-plt.show()
+        # スムーズな曲線を描画
+        plt.plot(data['step'], data['smoothed_value'], label=file_path.stem)
+
+    # グラフのタイトルと軸ラベルを設定
+    plt.title(f"{title} - {statistic}")
+    plt.xlabel('epoch')
+    plt.ylabel(statistic)
+
+    # 凡例を表示
+    plt.legend()
+
+    # 保存文件名，格式为：directory_path/statistic_resnet18_cifar10.pdf
+    save_path = os.path.join(directory_path, f"{statistic}_resnet18_cifar10_top3.pdf")
+    plt.savefig(save_path, format='pdf')
+    plt.close()  # 关闭图表，释放内存
+    print(f"Saved {statistic} graph to {save_path}")
