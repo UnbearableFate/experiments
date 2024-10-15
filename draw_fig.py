@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 # 目录路径和统计项的定义
-directory_path = "data/1010_adam_300"
+directory_path = "data/1016"
 title = 'ResNet18 CIFAR10'
 
 # 需要统计的内容（可以包含多个）
-statistics = ["top_1_accuracy","top_3_accuracy", "time"]  # 添加更多需要统计的项
+statistics = ["top_1_accuracy","top_3_accuracy"]  # 添加更多需要统计的项
 
 # スムージングのスパン（適宜調整）
 smoothing_span = 8
@@ -35,11 +35,12 @@ for statistic in statistics:
         data['smoothed_value'] = data[statistic].ewm(span=smoothing_span).mean()
 
         # スムーズな曲線を描画
+        data['step'] /= 1000  # 将时间从毫秒转换为秒
         plt.plot(data['step'], data['smoothed_value'], label=file_path.stem)
 
     # グラフのタイトルと軸ラベルを設定
     plt.title(f"{title} - {statistic}")
-    plt.xlabel('epoch')
+    plt.xlabel('time/s')
     plt.ylabel(statistic)
 
     # 凡例を表示

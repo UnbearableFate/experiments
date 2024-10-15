@@ -112,30 +112,23 @@ def save_top_k_mean_stats(root_dir, stats_to_compute):
 
 if __name__ == '__main__':
 
-    target_path = "data/1010_adam_300"
+    target_path = "data/1016"
 
     stats_to_compute = [
         {
         "tag": "Top-1 Accuracy/test",
         "column_name": "top_1_accuracy",
-        "k": 14,
+        "k": 1,
         "sort_order": "desc",
         "agg_func": "mean"
         },
         {
             "tag": "Top-3 Accuracy/test",
             "column_name": "top_3_accuracy",
-            "k": 14,
+            "k": 1,
             "sort_order": "desc",
             "agg_func": "mean"
         },
-        {
-            "tag": "Time/train",
-            "column_name": "time",
-            "k": 14,
-            "sort_order": "asc",
-            "agg_func": "mean"
-        }
     ]
 
     for sub_dir_path in os.listdir(target_path):
