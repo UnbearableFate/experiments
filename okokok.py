@@ -118,21 +118,21 @@ if __name__ == '__main__':
         {
         "tag": "Top-1 Accuracy/test",
         "column_name": "top_1_accuracy",
-        "k": 16,
+        "k": 14,
         "sort_order": "desc",
         "agg_func": "mean"
         },
         {
             "tag": "Top-3 Accuracy/test",
             "column_name": "top_3_accuracy",
-            "k": 16,
+            "k": 14,
             "sort_order": "desc",
             "agg_func": "mean"
         },
         {
             "tag": "Time/train",
             "column_name": "time",
-            "k": 16,
+            "k": 14,
             "sort_order": "asc",
             "agg_func": "mean"
         }

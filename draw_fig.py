@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 # 目录路径和统计项的定义
-directory_path = "data/1009_adam_experiment01"
+directory_path = "data/1010_adam_300"
 title = 'ResNet18 CIFAR10'
 
 # 需要统计的内容（可以包含多个）
-statistics = ["accuracy", "time"]  # 添加更多需要统计的项
+statistics = ["top_1_accuracy","top_3_accuracy", "time"]  # 添加更多需要统计的项
 
 # スムージングのスパン（適宜調整）
 smoothing_span = 8
@@ -46,7 +46,7 @@ for statistic in statistics:
     plt.legend()
 
     # 保存文件名，格式为：directory_path/statistic_resnet18_cifar10.pdf
-    save_path = os.path.join(directory_path, f"{statistic}_resnet18_cifar10_top3.pdf")
+    save_path = os.path.join(directory_path, f"{statistic}_resnet18_cifar10.pdf")
     plt.savefig(save_path, format='pdf')
     plt.close()  # 关闭图表，释放内存
     print(f"Saved {statistic} graph to {save_path}")
