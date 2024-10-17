@@ -72,6 +72,7 @@ def save_top_k_mean_stats(root_dir, stats_to_compute):
             if values:
                 reverse = (sort_order == 'desc')
                 values_sorted = sorted(values, reverse=reverse)
+                k = min(k, len(values_sorted)) if k is not None else len(values_sorted)
                 if k is not None:
                     top_k_values = values_sorted[:k]
                 else:
@@ -118,14 +119,14 @@ if __name__ == '__main__':
         {
         "tag": "Top-1 Accuracy/test",
         "column_name": "top_1_accuracy",
-        "k": 1,
+        "k": 12,
         "sort_order": "desc",
         "agg_func": "mean"
         },
         {
             "tag": "Top-3 Accuracy/test",
             "column_name": "top_3_accuracy",
-            "k": 1,
+            "k": 12,
             "sort_order": "desc",
             "agg_func": "mean"
         },
