@@ -35,7 +35,7 @@ for statistic in statistics:
         data['smoothed_value'] = data[statistic].ewm(span=smoothing_span).mean()
 
         # スムーズな曲線を描画
-        data['step'] /= 1000  # 将时间从毫秒转换为秒
+        data['step'] /= 10  # 将时间从百毫秒转换为秒
         plt.plot(data['step'], data['smoothed_value'], label=file_path.stem)
 
     # グラフのタイトルと軸ラベルを設定
