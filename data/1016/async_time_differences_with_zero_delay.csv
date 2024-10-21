@@ -1,3 +1,4 @@
-Delay (ms),Time Difference for Target Accuracy 0.88,Time Difference for Target Accuracy 0.89,Time Difference for Target Accuracy 0.9
-8,26829,12913,-524
-16,53636,54655,64151
+Delay (ms),Time Difference for Target Accuracy 0.885,Time Difference for Target Accuracy 0.89,Time Difference for Target Accuracy 0.895
+8,223,121,177
+16,500,525,590
+24,811,868,1009

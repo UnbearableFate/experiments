@@ -47,7 +47,7 @@ def save_top_k_mean_stats(root_dir, stats_to_compute):
                 tag = stat['tag']
                 # 提取数据
                 for step, value in data.get(tag, []):
-                    step = int (step / 100)
+                    #step = int (step / 100) # 0.1 秒为单位
                     if step not in values_per_step[tag]:
                         values_per_step[tag][step] = []
                     values_per_step[tag][step].append(value)

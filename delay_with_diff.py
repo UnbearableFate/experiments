@@ -95,7 +95,7 @@ def compute_time_differences(root_path, method1, method2, target_accuracies):
     # Plot the graph
     plt.figure()
     for target_accuracy in target_accuracies:
-        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] / 1000  # Convert to seconds
+        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] / 10  # Convert to seconds
         plt.plot(output_df['Delay (ms)'], y_values, marker='o', label=f"Target Accuracy {target_accuracy}")
     plt.xlabel('Delay (ms)')
     plt.ylabel('Time Difference (s)')
@@ -196,7 +196,7 @@ def compute_time_differences_with_zero_delay(root_path, method, target_accuracie
     # Plot the graph
     plt.figure()
     for target_accuracy in target_accuracies:
-        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] / 1000  # Convert to seconds
+        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] #/ 10  # Convert to seconds
         plt.plot(output_df['Delay (ms)'], y_values, marker='o', label=f"Target Accuracy {target_accuracy}")
     plt.xlabel('Delay (ms)')
     plt.ylabel('Time Difference (s)')
@@ -210,6 +210,6 @@ if __name__ == '__main__':
     root_path = "data/1016"
     method1 = "allreduce"
     method2 = "async"
-    target_accuracies = [0.88, 0.89, 0.9]
-    #compute_time_differences(root_path, method1, method2, target_accuracies)
-    compute_time_differences_with_zero_delay(root_path, method2, target_accuracies)
+    target_accuracies = [0.885, 0.89, 0.895]
+    compute_time_differences(root_path, method1, method2, target_accuracies)
+    #compute_time_differences_with_zero_delay(root_path, method2, target_accuracies)
