@@ -114,7 +114,7 @@ def save_top_k_mean_stats(root_dir, stats_to_compute):
 
 if __name__ == '__main__':
 
-    target_path = "data/1016"
+    target_path = "data/lognormally_distributed_random_delays"
 
     stats_to_compute = [
         {

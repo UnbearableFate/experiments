@@ -78,7 +78,7 @@ def compute_time_differences(root_path, method1, method2, target_accuracies):
             time2 = method_data[method2].get(delay, {}).get(target_accuracy, None)
 
             if time1 is not None and time2 is not None:
-                time_diff = time1 - time2
+                time_diff = (time1 - time2) / time1 * 100  # Calculate percentage difference
                 row[f"Time Difference for Target Accuracy {target_accuracy}"] = time_diff
             else:
                 row[f"Time Difference for Target Accuracy {target_accuracy}"] = None  # or use np.nan
@@ -95,7 +95,7 @@ def compute_time_differences(root_path, method1, method2, target_accuracies):
     # Plot the graph
     plt.figure()
     for target_accuracy in target_accuracies:
-        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] / 10  # Convert to seconds
+        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] #/ 1000  # Convert to seconds
         plt.plot(output_df['Delay (ms)'], y_values, marker='o', label=f"Target Accuracy {target_accuracy}")
     plt.xlabel('Delay (ms)')
     plt.ylabel('Time Difference (s)')
@@ -196,10 +196,10 @@ def compute_time_differences_with_zero_delay(root_path, method, target_accuracie
     # Plot the graph
     plt.figure()
     for target_accuracy in target_accuracies:
-        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] #/ 10  # Convert to seconds
+        y_values = output_df[f"Time Difference for Target Accuracy {target_accuracy}"] # Convert to seconds
         plt.plot(output_df['Delay (ms)'], y_values, marker='o', label=f"Target Accuracy {target_accuracy}")
     plt.xlabel('Delay (ms)')
-    plt.ylabel('Time Difference (s)')
+    plt.ylabel('Time Difference (%)')
     plt.title(f'Time Difference for {method} Compared to Zero Delay')
     plt.legend()
     plt.grid(True)
@@ -207,9 +207,9 @@ def compute_time_differences_with_zero_delay(root_path, method, target_accuracie
     plt.show()
 
 if __name__ == '__main__':
-    root_path = "data/1016"
+    root_path = "data/lognormally_distributed_random_delays"
     method1 = "allreduce"
-    method2 = "async"
-    target_accuracies = [0.885, 0.89, 0.895]
+    method2 = "adkfac"
+    target_accuracies = [0.89, 0.895]
     compute_time_differences(root_path, method1, method2, target_accuracies)
     #compute_time_differences_with_zero_delay(root_path, method2, target_accuracies)

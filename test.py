@@ -5,7 +5,7 @@ import numpy as np
 from scipy.stats import norm
 
 # 已知参数 2.678 / 49 * 20%
-e_value = 0.05  # 设置期望值 e
+e_value = 0.01  # 设置期望值 e
 k = 3        # 希望 P(X > 3e) < 1%
 p = 0.0625     # 概率阈值
 
